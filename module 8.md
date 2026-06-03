@@ -16,7 +16,33 @@ Algorithm:
  
 Program:
 
-//type your code here
+```
+#include <stdio.h>
+
+int main() {
+    int n;
+
+    printf("Enter a number: ");
+    scanf("%d", &n);
+
+    switch(n) {
+        case 5:
+            printf("seventy one\n");
+            break;
+        case 6:
+            printf("seventy two\n");
+            break;
+        case 13:
+            printf("seventy three\n");
+            break;
+        default:
+            printf("Greater than 13\n");
+            break;
+    }
+
+    return 0;
+}
+```
 
 
 
@@ -24,7 +50,8 @@ Program:
 Output:
 
 
-//paste your output here
+<img width="453" height="179" alt="image" src="https://github.com/user-attachments/assets/e7d5c793-7b23-44a2-98f3-1fb709abf806" />
+
 
 
 
@@ -46,16 +73,39 @@ Algorithm:
 6.	End
  
 Program:
+```
+#include <stdio.h>
+#include <string.h>
 
-//type your code here
+int main() {
+    char a[50];
+    int c;
 
+    printf("Enter the string: ");
+    scanf("%s", a);
 
+    for (int h = 0; h <= 3; h++) {
+        c = 0;
+        for (int i = 0; a[i] != '\0'; i++) {
+            if (a[i] == (h + '0')) {
+                c++;
+            }
+        }
+        printf("%d ", c);
+    }
+    printf("\n");
+
+    return 0;
+}
+
+```
 
 
 Output:
 
 
-//paste your output here
+<img width="505" height="186" alt="image" src="https://github.com/user-attachments/assets/4febc636-f244-419c-b6f3-b46b879b851d" />
+
 
 
 
@@ -84,7 +134,85 @@ Free the memory allocated for each string in s Free the memory allocated for s
  
 Program:
 
-//type your code here
+```
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+int next_permutation(char **s, int n) {
+    for (int i = n - 2; i >= 0; i--) {
+        if (strcmp(s[i], s[i + 1]) < 0) {
+            for (int j = n - 1; j > i; j--) {
+                if (strcmp(s[j], s[i]) > 0) {
+                    char *tmp = s[i];
+                    s[i] = s[j];
+                    s[j] = tmp;
+                    int reverse_start = i + 1;
+                    int reverse_end = n - 1;
+                    while (reverse_start < reverse_end) {
+                        tmp = s[reverse_start];
+                        s[reverse_start] = s[reverse_end];
+                        s[reverse_end] = tmp;
+                        reverse_start++;
+                        reverse_end--;
+                    }
+                    return 1;
+                }
+            }
+        }
+    }
+    return 0;
+}
+
+int main() {
+    // 2. Declare variables s and n
+    char **s;
+    int n;
+
+    // 4. Input the number of strings
+    printf("Enter number of strings: ");
+    if (scanf("%d", &n) != 1) return 1;
+
+    // 3. Memory Allocation for array of strings
+    s = (char **)malloc(n * sizeof(char *));
+    if (s == NULL) return 1;
+
+    // 4. Dynamically allocate memory for each string and take input
+    for (int i = 0; i < n; i++) {
+        s[i] = (char *)malloc(11 * sizeof(char)); // Allocating space for max 10 chars
+        printf("Enter string %d: ", i + 1);
+        scanf("%s", s[i]);
+    }
+
+    // Sorting strings initially to ensure strict lexicographical starting point
+    for (int i = 0; i < n - 1; i++) {
+        for (int j = i + 1; j < n; j++) {
+            if (strcmp(s[i], s[j]) > 0) {
+                char *tmp = s[i];
+                s[i] = s[j];
+                s[j] = tmp;
+            }
+        }
+    }
+
+    printf("\nPermutations:\n");
+    // 5. Permutation Generation Loop
+    do {
+        for (int i = 0; i < n; i++) {
+            printf("%s%c", s[i], i == n - 1 ? '\n' : ' ');
+        }
+    } while (next_permutation(s, n));
+
+    // 6. Memory Deallocation
+    for (int i = 0; i < n; i++) {
+        free(s[i]);
+    }
+    free(s);
+
+    // 7. End
+    return 0;
+}
+```
 
 
 
@@ -92,7 +220,8 @@ Program:
 Output:
 
 
-//paste your output here
+<img width="506" height="291" alt="image" src="https://github.com/user-attachments/assets/1e771d12-5f44-40ca-ad51-5aa3187d0c28" />
+
 
 
 
@@ -117,7 +246,39 @@ Algorithm:
  
 Program:
 
-//type your code here
+```
+#include <stdio.h>
+
+int main() {
+    // 2. Declare integer variables n, i, j, min
+    int n, i, j, min;
+    int len;
+
+    // 3. Read the value of n from the user
+    printf("Enter the value of n: ");
+    scanf("%d", &n);
+
+    // 4. Calculate the length of the side of the square matrix
+    len = n * 2 - 1;
+
+    // 5. Matrix Generation Loop
+    for (i = 0; i < len; i++) {
+        for (j = 0; j < len; j++) {
+            // 6. Calculate min as the minimum distance to the borders
+            min = i < j ? i : j;
+            min = min < len - i ? min : len - i - 1;
+            min = min < len - j ? min : len - j - 1;
+
+            // Print the corresponding value based on minimum distance
+            printf("%d ", n - min);
+        }
+        printf("\n");
+    }
+
+    // 7. End
+    return 0;
+}
+```
 
 
 
@@ -125,7 +286,8 @@ Program:
 Output:
 
 
-//paste your output here
+<img width="549" height="356" alt="image" src="https://github.com/user-attachments/assets/28e503a2-e47d-4b05-9973-3acb867d879c" />
+
 
 
 
@@ -156,46 +318,30 @@ o	Call the square() function and display the result.
 
 Program:
 
-//type your code here
+```
+#include <stdio.h>
 
+int square() {
+    int num;
+    printf("Enter a number: ");
+    scanf("%d", &num);
+    return num * num;
+}
 
-
-
+int main() {
+    int result = square();
+    printf("The square of the number is: %d\n", result);
+    return 0;
+}
+```
 Output:
 
 
-//paste your output here
-
-
-
-
+<img width="471" height="183" alt="image" src="https://github.com/user-attachments/assets/b1b4afb3-63f3-4325-ad16-ba81173a7714" />
 
 
 Result:
 Thus, the program is verified successfully
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
